@@ -7,6 +7,9 @@ Compare userSelection and computerSelection
 Output a string that declares the winner of the round
 If TIE, round re-starts  */
 
+let playerSelection = prompt("Rock, Paper, Scissors");
+
+
 function getComputerChoice() {
   let rock = 1;
   let scissors = 2;
@@ -23,22 +26,57 @@ function getComputerChoice() {
   }
 }
 
+
 function playRound(playerSelection, computerSelection) {
   playerSelection = playerSelection.toLowerCase();
 
   if (playerSelection === computerSelection) {
-    return "It's a TIE!";
+    return "tie";
   } else if (
     (playerSelection === "rock" && computerSelection === "paper") ||
     (playerSelection === "paper" && computerSelection === "scissors") ||
     (playerSelection === "scissors" && computerSelection === "rock")
-  ) { return `You Lose! ${computerSelection} beats ${playerSelection}`;
+  ) {
+    return "lost";
   } else {
-    return `You Win! ${playerSelection} beats ${computerSelection}`;
+    return "win";
   }
 }
 
-const playerSelection = "scissors";
-const computerSelection = getComputerChoice();
-console.log(playRound(playerSelection, computerSelection));
+function game() {
+  
+  let score = 1;
+  let ties = 0;
 
+  for (let i = 0; i < 5; i++) {
+   
+    console.log(playRound(playerSelection,computerSelection));
+    
+    let roundResult = playRound(playerSelection,computerSelection);
+
+    if (playRound(playerSelection,computerSelection) === "tie") {
+      ties++;
+    } else if (playRound(playerSelection,computerSelection) === "lost") {
+      score--;
+    } else if (playRound(playerSelection,computerSelection) === "win") {
+      score++;
+    }
+
+    playerSelection = prompt(`You ${roundResult} this round. Play again!`);
+    computerSelection = getComputerChoice();
+
+  }
+
+  if (ties === 3) {
+    return "The game was Tied";
+  } else if (score > 2) {
+    return `You won the game C:`;
+  } else {
+    return `You lost the game :C`;
+  }
+  
+}
+
+
+let computerSelection = getComputerChoice();
+console.log(game());
